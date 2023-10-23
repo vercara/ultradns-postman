@@ -1,0 +1,1108 @@
+{
+	"info": {
+		"_postman_id": "d67405ca-b9de-46d2-b776-ac3b0bfd27a3",
+		"name": "UDNS",
+		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2146434"
+	},
+	"item": [
+		{
+			"name": "Zones",
+			"item": [
+				{
+					"name": "List Zone SOA",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}/rrsets/SOA",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}",
+								"rrsets",
+								"SOA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Zone Properties",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Zone Pools",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}/rrsets?q=kind:POOLS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}",
+								"rrsets"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "kind:POOLS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Zones",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Zone Web Forwards",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}/webforwards",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}",
+								"webforwards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Zone RRSets",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}/rrsets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}",
+								"rrsets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Zone(s) Export",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"zoneNames\": [\n        \"{{zones_zoneName}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/export",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Snapshot",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/zones/{{zones_zoneName}}/snapshot",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"zones",
+								"{{zones_zoneName}}",
+								"snapshot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Snapshot",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/zones/{{zones_zoneName}}/restore",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"zones",
+								"{{zones_zoneName}}",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "In this folder are operations pertaining to the zones (DNS configuration).\n\nAt the time which I'm writing this, the v3 endpoint has the latest zone resources, though not every resource is available in the v3 endpoint. Some aren't even available in v2. The snapshot/restore functionality only works with v1, for instance.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Check Task",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"currentTask\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTask}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTask}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task Result",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"currentTask\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTask}}/result",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTask}}",
+								"result"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Some endpoints return background tasks. The zone snapshot and export zone file endpoints, for example. In this instance, the API responds with a status code 202 ('Accepted') and the headers will contain an x-task-id value. You use the task ID to check on the status and result of your operation.\n\nThe endpoints that I've added to this collection which return tasks IDs will store it under the \"currentTask\" collection variable. The endpoints in this folder will use that variable, by default. Note that running another request that generates a new task will overwrite this value."
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Request Report",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"reports_requestId\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/requests/{{reports_requestId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"requests",
+								"{{reports_requestId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create NXDomain Report",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (utils.isNotSet(pm.collectionVariables.get(\"reports_startDate\")) && utils.isNotSet(pm.collectionVariables.get(\"reports_endDate\"))) {",
+									"    // If either value isn't set then use a default of the last 30 days",
+									"    const reportDates = utils.lastXDays(30);",
+									"",
+									"    pm.collectionVariables.set(\"reports_startDate\", reportDates[\"start\"]);",
+									"    pm.collectionVariables.set(\"reports_endDate\", reportDates[\"end\"]);",
+									"}",
+									"",
+									"const requiredVariables = [\"baseUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"hostQueryVolume\": {\n    \"startDate\": \"{{reports_startDate}}\",\n    \"endDate\": \"{{reports_endDate}}\",\n    \"zoneNames\": [\n        {{zones_zoneName}}\n    ]\n  },\n  \"sortFields\": {\n    \"nxdomainCount\": \"DESC\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/reports/dns_resolution/query_volume/host?advance=true&reportType=ADVANCED_NXDOMAINS&limit=100000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"reports",
+								"dns_resolution",
+								"query_volume",
+								"host"
+							],
+							"query": [
+								{
+									"key": "advance",
+									"value": "true"
+								},
+								{
+									"key": "reportType",
+									"value": "ADVANCED_NXDOMAINS"
+								},
+								{
+									"key": "limit",
+									"value": "100000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These are the APIs for reporting. In a fashion similar-to-but-different-than tasks, the reports will return an ID. However, the ID, in this instance, is in the JSON body of the response. You use the \"requests\" endpoint along with your ID to get the result.\n\nAfter you create a report, it's ID automatically gets saved to a collection variable which will then get passed to the requests endpoint. Note that generating a new report writes over this value."
+		},
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "Verify",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_telemetryId\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/telemetryWebhook/test/{{webhook_telemetryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"telemetryWebhook",
+								"test",
+								"{{webhook_telemetryId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Endpoint",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_endpointUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let resp = pm.response.json();",
+									"",
+									"// Check if \"telemetryEventId\" exists in the response",
+									"if (resp.hasOwnProperty(\"telemetryEventId\")) {",
+									"    // Set the \"webhook_telemetryId\" collection variable",
+									"    pm.collectionVariables.set(\"webhook_telemetryId\", resp.telemetryEventId);",
+									"    console.log(`Telemetry ID saved: ${resp.telemetryEventId}`);",
+									"} else {",
+									"    console.error(\"Error: 'telemetryEventId' not found in the response body.\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"{{webhook_endpointUrl}}\",\r\n    \"type\": \"TEST_TELEMETRY_WEBHOOK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/telemetryWebhook/test",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"telemetryWebhook",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_endpointUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"webhooks\": [\r\n        {\r\n            \"enable\": true,\r\n            \"url\": \"{{webhook_endpointUrl}}\",\r\n            \"include\": {\r\n                \"ALL_CHANGES\": true\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/settings/PUSH_NOTIFICATIONS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"settings",
+								"PUSH_NOTIFICATIONS"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These requests pertain to UDNS's push notification feature. The test endpoint will poll your webhook with a telemetry event for testing. The verify endpoint validates the success of said request, using the event ID. The \"create\" request will create the push notification config. Note that, unlike the UI, you don't _have to_ validate your webhook functionality before creating it, though, realistically, you should.\n\nThe telemetry event ID will get stored automatically as a collection variable when performing the test."
+		},
+		{
+			"name": "Subaccounts",
+			"item": [
+				{
+					"name": "List Subaccounts",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Subaccounts Zones",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts/zones",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subaccounts",
+								"zones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subaccount Authorization",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"baseUrl\", \"subaccounts_accountName\"];  ",
+									"utils.checkVars(requiredVariables);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts/{{subaccounts_accountName}}/token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subaccounts",
+								"{{subaccounts_accountName}}",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints specifically for accounts that have subaccounts (resellers, mostly). You can list the accounts and all their zones directly using the primary account's credentials.\n\nFor more granular subaccount operations, the primary account owner has the ability to \"masquerade\" as a subaccount user using the subaccount auth endpoint. This generates a set of bearer and refresh tokens with access to the subaccount.\n\nThis particular functionality of the collection could be more robust, admittedly. I don't have subaccounts in my test account and don't particularly care to set one up for testing, at least not at this time."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"if (!pm.environment.name) {",
+					"    throw new Error(\"MissingEnvironment: No environment selected. Please select an environment before running the request.\");",
+					"}",
+					"",
+					"utils = {",
+					"  isNotSet: function(value) {",
+					"    return value === null || value === \"null\" || value === undefined || value === \"undefined\" || value === \"\";",
+					"  },",
+					"  checkVars: function(values, checkEnv=false) {",
+					"    values.forEach((varName) => {",
+					"        let value, errorType;",
+					"        if (checkEnv) {",
+					"            value = pm.environment.get(varName);",
+					"            errorType = \"MissingEnvironmentVariable\";",
+					"        } else {",
+					"            value = pm.collectionVariables.get(varName);",
+					"            errorType = \"MissingCollectionVariable\";",
+					"        }",
+					"        if (utils.isNotSet(value)) {",
+					"            throw new Error(`${errorType}: The variable \"${varName}\" is not set or is null. Please set a valid value before proceeding.`);",
+					"        }",
+					"    });",
+					"  },",
+					"  lastXDays: function(days) {",
+					"    if (days > 30) {",
+					"      throw new Error(`You specified ${days.toString()} days but the max is 30.`);",
+					"    }",
+					"    const yesterday = new Date();",
+					"    yesterday.setDate(yesterday.getDate() - 1);",
+					"    const startDate = new Date();",
+					"    startDate.setDate(yesterday.getDate() - days);",
+					"    return {",
+					"      \"start\": startDate.toISOString().split('T')[0],",
+					"      \"end\": yesterday.toISOString().split('T')[0]",
+					"    }",
+					"  }",
+					"};",
+					"",
+					"utils.checkVars([\"username\", \"password\"], true);",
+					"",
+					"const username = pm.environment.get(\"username\");",
+					"const password = pm.environment.get(\"password\");",
+					"",
+					"const baseUrl = pm.collectionVariables.get('baseUrl');",
+					"",
+					"const currentAccessToken = pm.environment.get('accessToken');",
+					"const currentRefreshToken = pm.environment.get('refreshToken');",
+					"const tokenTimestamp = pm.environment.get('tokenTimestamp');",
+					"",
+					"function setTokens(accessToken, refreshToken) {",
+					"    const now = Date.now();",
+					"    pm.environment.set('accessToken', accessToken);",
+					"    pm.environment.set('refreshToken', refreshToken);",
+					"    pm.environment.set('tokenTimestamp', now.toString());",
+					"}",
+					"",
+					"function getNewTokens(un, pw) {",
+					"    const payload = {",
+					"        grant_type: 'password',",
+					"        username: un,",
+					"        password: pw",
+					"    };",
+					"",
+					"    pm.sendRequest({",
+					"        url: `${baseUrl}/authorization/token`,",
+					"        method: 'POST',",
+					"        header: 'Content-Type:application/x-www-form-urlencoded',",
+					"        body: {",
+					"            mode: 'urlencoded',",
+					"            urlencoded: Object.keys(payload).map(key => ({key, value: payload[key]}))",
+					"        }",
+					"    }, (err, res) => {",
+					"        if (err) {",
+					"            console.error(`AuthFailed: ${err}`);",
+					"        } else {",
+					"            setTokens(res.json().accessToken, res.json().refreshToken);",
+					"        }",
+					"    });",
+					"}",
+					"",
+					"if (!currentAccessToken || !tokenTimestamp) {",
+					"    getNewTokens(username, password);",
+					"} else {",
+					"    const fiftyFiveMinutes = 55 * 60 * 1000;  // milliseconds",
+					"    const now = Date.now();",
+					"    const timePassed = now - parseInt(tokenTimestamp, 10);",
+					"",
+					"    // If more than 55min has passed, we try to refresh the token",
+					"    if (timePassed > fiftyFiveMinutes) {",
+					"        if (currentRefreshToken) {",
+					"            const payload = {",
+					"                grant_type: 'refresh_token',",
+					"                refresh_token: currentRefreshToken",
+					"            };",
+					"",
+					"            pm.sendRequest({",
+					"                url: `${baseUrl}/authorization/token`,",
+					"                method: 'POST',",
+					"                header: 'Content-Type:application/x-www-form-urlencoded',",
+					"                body: {",
+					"                    mode: 'urlencoded',",
+					"                    urlencoded: Object.keys(payload).map(key => ({key, value: payload[key]}))",
+					"                }",
+					"            }, (err, res) => {",
+					"                if (err || res.code !== 200) {",
+					"                    // If there's an error or the refresh token is stale",
+					"                    console.log(`RefreshFailed: Bad refresh token, re-authenticating: ${err}`)",
+					"                    getNewTokens(username, password);",
+					"                } else {",
+					"                    setTokens(res.json().accessToken, res.json().refreshToken);",
+					"                }",
+					"            });",
+					"        } else {",
+					"            getNewTokens(username, password);",
+					"        }",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Check if the x-task-id header is present in the response",
+					"let taskId = pm.response.headers.get(\"x-task-id\");",
+					"",
+					"if (taskId) {",
+					"    pm.collectionVariables.set(\"currentTask\", taskId);",
+					"    console.log(`Saved x-task-id: ${taskId} to currentTask collection variable.`);",
+					"}",
+					"",
+					"// Check if there's a response body and if the response can be parsed as JSON",
+					"if (pm.response.text() && pm.response.headers.get('Content-Type').includes('application/json')) {",
+					"    try {",
+					"        let resp = pm.response.json();",
+					"        ",
+					"        // Check if \"requestId\" exists in the response",
+					"        if (resp.hasOwnProperty(\"requestId\")) {",
+					"            // Set the \"requestId\" collection variable",
+					"            pm.collectionVariables.set(\"reports_requestId\", resp.requestId);",
+					"            console.log(`Request ID saved: ${resp.requestId}`);",
+					"        }",
+					"    } catch (e) {",
+					"        // This will catch any errors in parsing the JSON, but do nothing",
+					"        // Just in case, so it doesn't somehow cause non-JSON responses to error",
+					"    }",
+					"}",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.ultradns.com",
+			"type": "string"
+		},
+		{
+			"key": "currentTask",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "webhook_telemetryId",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "webhook_endpointUrl",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "zones_zoneName",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "reports_startDate",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "reports_endDate",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "reports_requestId",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "subaccounts_accountName",
+			"value": "null",
+			"type": "string"
+		}
+	]
+}
