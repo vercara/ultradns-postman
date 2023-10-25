@@ -30,7 +30,7 @@ The collection is organized into folders, each representing a base resource (ex:
 
 - **Zones**: Contains the DNS configuration. Some resources are not available in the latest "version" of the API, hence why "snapshot/restore" use the "v1" endpoint.
 
-- **Tasks**: Operations that produce background tasks will return a `202` status code and have an `x-task-id` header. This ID is stored under the `currentTask` variable in the collection's environment.
+- **Tasks**: Operations that produce background tasks will return a `202` status code and have an `x-task-id` header. This ID is stored under the `currentTask` variable in the environment.
 
 - **Reports**: After you request a report, retrieve it from the `results` endpoint using the report ID. This ID is stored in the post-request script, similar to tasks.
 

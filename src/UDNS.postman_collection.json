@@ -17,8 +17,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -50,14 +50,53 @@
 					"response": []
 				},
 				{
+					"name": "List Zone NS",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones/{{zones_zoneName}}/rrsets/NS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones",
+								"{{zones_zoneName}}",
+								"rrsets",
+								"NS"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "List Zone Properties",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -93,8 +132,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -137,8 +176,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -167,14 +205,59 @@
 					"response": []
 				},
 				{
+					"name": "Create Zone",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const requiredVariables = [\"username\",\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"properties\":{\n      \"name\":\"{{zones_zoneName}}\",\n      \"accountName\":\"{{username}}\",\n      \"type\":\"PRIMARY\"\n   },\n   \"primaryCreateInfo\":{\n      \"forceImport\":true,\n      \"createType\":\"NEW\"\n   },\n   \"changeComment\":\"Create zone as agreed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v3/zones",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v3",
+								"zones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "List Zone Web Forwards",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -211,8 +294,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -249,8 +332,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -304,8 +387,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -331,7 +414,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"\"\n}",
+							"raw": "{}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -360,8 +443,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"zones_zoneName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -387,7 +470,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"\"\n}",
+							"raw": "{}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -442,8 +525,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"currentTask\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"currentTask\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -478,8 +561,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"currentTask\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"currentTask\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -521,8 +604,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"reports_requestId\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"reports_requestId\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -558,16 +641,16 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"if (utils.isNotSet(pm.collectionVariables.get(\"reports_startDate\")) && utils.isNotSet(pm.collectionVariables.get(\"reports_endDate\"))) {",
+									"if (utils.isNotSet(pm.environment.get(\"reports_startDate\")) && utils.isNotSet(pm.environment.get(\"reports_endDate\"))) {",
 									"    // If either value isn't set then use a default of the last 30 days",
 									"    const reportDates = utils.lastXDays(30);",
 									"",
-									"    pm.collectionVariables.set(\"reports_startDate\", reportDates[\"start\"]);",
-									"    pm.collectionVariables.set(\"reports_endDate\", reportDates[\"end\"]);",
+									"    pm.environment.set(\"reports_startDate\", reportDates[\"start\"]);",
+									"    pm.environment.set(\"reports_endDate\", reportDates[\"end\"]);",
 									"}",
 									"",
-									"const requiredVariables = [\"baseUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"zones_zoneName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -593,7 +676,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"hostQueryVolume\": {\n    \"startDate\": \"{{reports_startDate}}\",\n    \"endDate\": \"{{reports_endDate}}\",\n    \"zoneNames\": [\n        {{zones_zoneName}}\n    ]\n  },\n  \"sortFields\": {\n    \"nxdomainCount\": \"DESC\"\n  }\n}",
+							"raw": "{\n  \"hostQueryVolume\": {\n    \"startDate\": \"{{reports_startDate}}\",\n    \"endDate\": \"{{reports_endDate}}\",\n    \"zoneNames\": [\n        \"{{zones_zoneName}}\"\n    ]\n  },\n  \"sortFields\": {\n    \"nxdomainCount\": \"DESC\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -643,8 +726,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_telemetryId\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"username\", \"webhook_telemetryId\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -676,8 +759,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_endpointUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"username\", \"webhook_endpointUrl\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -692,7 +775,7 @@
 									"// Check if \"telemetryEventId\" exists in the response",
 									"if (resp.hasOwnProperty(\"telemetryEventId\")) {",
 									"    // Set the \"webhook_telemetryId\" collection variable",
-									"    pm.collectionVariables.set(\"webhook_telemetryId\", resp.telemetryEventId);",
+									"    pm.environment.set(\"webhook_telemetryId\", resp.telemetryEventId);",
 									"    console.log(`Telemetry ID saved: ${resp.telemetryEventId}`);",
 									"} else {",
 									"    console.error(\"Error: 'telemetryEventId' not found in the response body.\");",
@@ -736,8 +819,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"username\", \"webhook_endpointUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"username\", \"webhook_endpointUrl\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -783,8 +866,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -818,8 +900,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\"];  ",
-									"utils.checkVars(requiredVariables);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -854,8 +935,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const requiredVariables = [\"baseUrl\", \"subaccounts_accountName\"];  ",
-									"utils.checkVars(requiredVariables);"
+									"const requiredVariables = [\"subaccounts_accountName\"];  ",
+									"utils.checkVars(requiredVariables, true);"
 								],
 								"type": "text/javascript"
 							}
@@ -947,6 +1028,7 @@
 					"const username = pm.environment.get(\"username\");",
 					"const password = pm.environment.get(\"password\");",
 					"",
+					"utils.checkVars([\"baseUrl\"]);",
 					"const baseUrl = pm.collectionVariables.get('baseUrl');",
 					"",
 					"const currentAccessToken = pm.environment.get('accessToken');",
@@ -984,7 +1066,7 @@
 					"    });",
 					"}",
 					"",
-					"if (!currentAccessToken || !tokenTimestamp) {",
+					"if (utils.isNotSet(currentAccessToken) || utils.isNotSet(tokenTimestamp)) {",
 					"    getNewTokens(username, password);",
 					"} else {",
 					"    const fiftyFiveMinutes = 55 * 60 * 1000;  // milliseconds",
@@ -1033,7 +1115,7 @@
 					"let taskId = pm.response.headers.get(\"x-task-id\");",
 					"",
 					"if (taskId) {",
-					"    pm.collectionVariables.set(\"currentTask\", taskId);",
+					"    pm.environment.set(\"currentTask\", taskId);",
 					"    console.log(`Saved x-task-id: ${taskId} to currentTask collection variable.`);",
 					"}",
 					"",
@@ -1045,7 +1127,7 @@
 					"        // Check if \"requestId\" exists in the response",
 					"        if (resp.hasOwnProperty(\"requestId\")) {",
 					"            // Set the \"requestId\" collection variable",
-					"            pm.collectionVariables.set(\"reports_requestId\", resp.requestId);",
+					"            pm.environment.set(\"reports_requestId\", resp.requestId);",
 					"            console.log(`Request ID saved: ${resp.requestId}`);",
 					"        }",
 					"    } catch (e) {",
@@ -1062,46 +1144,6 @@
 		{
 			"key": "baseUrl",
 			"value": "https://api.ultradns.com",
-			"type": "string"
-		},
-		{
-			"key": "currentTask",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "webhook_telemetryId",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "webhook_endpointUrl",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "zones_zoneName",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "reports_startDate",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "reports_endDate",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "reports_requestId",
-			"value": "null",
-			"type": "string"
-		},
-		{
-			"key": "subaccounts_accountName",
-			"value": "null",
 			"type": "string"
 		}
 	]
