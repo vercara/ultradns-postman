@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d67405ca-b9de-46d2-b776-ac3b0bfd27a3",
+		"_postman_id": "e93ae1b6-1024-4ed1-bd6b-9e2a74e70420",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2146434"
+		"_exporter_id": "269716"
 	},
 	"item": [
 		{
@@ -29,8 +29,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -68,8 +67,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -107,8 +105,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -144,8 +141,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -187,8 +183,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -223,8 +218,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -268,8 +262,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -306,8 +299,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -353,8 +345,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -408,8 +399,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -464,8 +454,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -487,6 +476,48 @@
 								"zones",
 								"{{zones_zoneName}}",
 								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create SiteBacker Pool",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// NOTE: Update the body below as follows: \r\n// - Add an entry to rdata array for each IP that will be part of the pool\r\n// - For each IP entered, add an object to the rdataInfo array that includes:\r\n// -- state: NORMAL, Force Active, Force Fail\r\n// -- runProbes: true, false\r\n// -- priority: Positive Integer\r\n// -- failoverDelay: 0, or Positive Integer\r\n// -- threshold: Positive Integer\r\n// -- availableToServe: true, false\r\n// - Add an entry to the backupRecords array that includes:\r\n// -- rdata: String (IP address)\r\n// -- failoverDelay: 0 or Positive Integer\r\n{\r\n    \"ttl\": 300,\r\n    \"rdata\": [\r\n        \"1.1.1.1\",\r\n        \"2.2.2.2\",\r\n        \"3.3.3.3\",\r\n        \"4.4.4.4\"\r\n    ],\r\n    \"profile\": {\r\n        \"@context\": \"http://schemas.ultradns.com/SBPool.jsonschema\",\r\n        \"description\": \"Test SiteBacker Pool\",\r\n        \"runProbes\": true,\r\n        \"actOnProbes\": true,\r\n        \"order\": \"FIXED\",\r\n        \"maxActive\": 1,\r\n        \"failureThreshold\": 0,\r\n        \"maxServed\": 1,\r\n        \"rdataInfo\": [{\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }],\r\n        \"backupRecords\": [{\r\n            \"rdata\": \"9.9.9.9\",\r\n            \"failoverDelay\":0\r\n        }]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/rrsets/{{sb_rrType}}/{{sb_ownerName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"rrsets",
+								"{{sb_rrType}}",
+								"{{sb_ownerName}}"
 							]
 						}
 					},
@@ -537,8 +568,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -573,8 +603,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -616,8 +645,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -670,8 +698,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -877,8 +904,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -911,8 +937,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -947,8 +972,7 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"url": {
