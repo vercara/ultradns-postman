@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e93ae1b6-1024-4ed1-bd6b-9e2a74e70420",
+		"_postman_id": "96acc28c-c730-4484-9a15-43f2bb753d3a",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -991,6 +991,286 @@
 				}
 			],
 			"description": "Endpoints specifically for accounts that have subaccounts (resellers, mostly). You can list the accounts and all their zones directly using the primary account's credentials.\n\nFor more granular subaccount operations, the primary account owner has the ability to \"masquerade\" as a subaccount user using the subaccount auth endpoint. This generates a set of bearer and refresh tokens with access to the subaccount.\n\nThis particular functionality of the collection could be more robust, admittedly. I don't have subaccounts in my test account and don't particularly care to set one up for testing, at least not at this time."
+		},
+		{
+			"name": "DNSSEC Multi-Signer",
+			"item": [
+				{
+					"name": "Initialize DNSSEC Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dnssecSettings\": {\r\n        \"dnskeyTtl\": {{dnssec_dnskey_ttl}},\r\n        \"rrsigValidity\": {{dnssec_rrsig_validity}} \r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/settings/DNSSEC_SETTINGS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"settings",
+								"DNSSEC_SETTINGS"
+							]
+						},
+						"description": "UltraDNS allows the configuration of some default values to be used when signing a zone. These  \nconfigurations are then set for DNSSEC signing of every zone in the account:\n\n- DNSKEY TTL - The Time to Live (TTL) in seconds, used for the DNSKEY resource record set. Default value is 86400 (1 day) with valid values in the range of 300-172800 seconds (5 minutes - 2 days).\n    \n- RRSIG Validity Period - Sets the RRSIG validity interval, in days when signing responses. Default value of 14 (2 weeks), with valid values in the range of 5-30 (days).\n    \n\nThese default value preferences can be set using the API as shown below. Once set, these values will be used for every zone signing, rollover, and resigning action on every zone in the account.\n\nNOTE: If you have previously set these values with a call to this API then you will need to use the Update (PUT) API call to update them and the Remove (DELETE) API call to delete them."
+					},
+					"response": []
+				},
+				{
+					"name": "Update DNSSEC Settings Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dnssecSettings\": {\r\n        \"dnskeyTtl\": {{dnssec_dnskey_ttl}},\r\n        \"rrsigValidity\": {{dnssec_rrsig_validity}} \r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/settings/DNSSEC_SETTINGS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"settings",
+								"DNSSEC_SETTINGS"
+							]
+						},
+						"description": "UltraDNS allows the configuration of some default values to be used when signing a zone. These  \nconfigurations are then set for DNSSEC signing of every zone in the account:\n\n- DNSKEY TTL - The Time to Live (TTL) in seconds, used for the DNSKEY resource record set. Default value is 86400 (1 day) with valid values in the range of 300-172800 seconds (5 minutes - 2 days).\n    \n- RRSIG Validity Period - Sets the RRSIG validity interval, in days when signing responses. Default value of 14 (2 weeks), with valid values in the range of 5-30 (days).\n    \n\nThese default value preferences can be set using the API as shown below. Once set, these values will be used for every zone signing, rollover, and resigning action on every zone in the account.\n\nNOTE: Use the Initialize (POST) API call to initially set these values and the Remove (DELETE) API call to delete them."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove DNSSEC Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accounts/{{username}}/settings/DNSSEC_SETTINGS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{username}}",
+								"settings",
+								"DNSSEC_SETTINGS"
+							]
+						},
+						"description": "UltraDNS allows the configuration of some default values to be used when signing a zone. These  \nconfigurations are then set for DNSSEC signing of every zone in the account:\n\n- DNSKEY TTL - The Time to Live (TTL) in seconds, used for the DNSKEY resource record set. Default value is 86400 (1 day) with valid values in the range of 300-172800 seconds (5 minutes - 2 days).\n    \n- RRSIG Validity Period - Sets the RRSIG validity interval, in days when signing responses. Default value of 14 (2 weeks), with valid values in the range of 5-30 (days).\n    \n\nThese default value preferences can be set using the API as shown below. Once set, these values will be used for every zone signing, rollover, and resigning action on every zone in the account.\n\nNOTE: Use the Initialize (POST) API call to initially set these values and the Update (PUT) API call to update them."
+					},
+					"response": []
+				},
+				{
+					"name": "DNSSEC Sign Zone",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/dnssec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"dnssec"
+							]
+						},
+						"description": "This API is used to DNSSEC sign a zone on UltraDNS and can be used on both primary and secondary zones.\n\nIf you have external signer DNSKEY information you can include that as an _externalKeys_ element in the JSON payload (see [Update External Signer](https://go.postman.co/workspace/My-Workspace~44d8667f-697e-43dd-8c23-aea1d7afb89c/documentation/269716-96acc28c-c730-4484-9a15-43f2bb753d3a?entity=request-09c10a66-1e56-4e2f-8504-9f15c8dd7766)), otherwise the payload is empty."
+					},
+					"response": []
+				},
+				{
+					"name": "DNSSEC Un-Sign Zone",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/dnssec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"dnssec"
+							]
+						},
+						"description": "This API call will unsign a DNSSEC signed zone, removing all DNSKEY information (including external keys)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get DS Records",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/dnssec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"dnssec"
+							]
+						},
+						"description": "Provides detailed information regarding the current DNSSEC status of a zone. This API call can be used to get the DS (Designated Signer) records for the zone that can be used by the parent zone to establish a chain-of-trust for the zone."
+					},
+					"response": []
+				},
+				{
+					"name": "Update External Signer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"externalKeys\":[\r\n        {\r\n            \"ksk\":[\"{{dnssec_extkey_ksk}}\"],\r\n            \"zsk\":[\"{{dnssec_extkey_zsk}}\"]\r\n        }\r\n    ]\r\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/dnssec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"dnssec"
+							]
+						},
+						"description": "Configure external signer keys (KSK and ZSK) for a DNSSEC signed zone. KSK and ZSK DNSKEY records are formatted as follows:\n\n```\n<FLAGS> <PROTOCOL_VALUE> <ALGORITHM> <BASE64_ENCODED_PUBLIC_KEY>\n\n ```\n\nNOTE: For an unsigned zone you can change the method to POST and set the value of _externalKeys_ to both DNSSEC sign a zone and install the DNSKEY records from an external provider."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove External Signer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"externalKeys\":[]\r\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/dnssec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"dnssec"
+							]
+						},
+						"description": "Remove DNSKEY records for external signer from a DNSSEC signed zone.\n\nNOTE: External keys will not show up in the UltraDNS portal. Run a _dig_ command against the zone for DNSKEY records to verify the external keys were added. For example:\n\n_\\>> dig @udns1.ultradns.com example.com DNSKEY_"
+					},
+					"response": []
+				}
+			],
+			"description": "UltraDNS API endpoints that support [multi-signer DNSSEC](https://ultra-portalstatic.ultradns.com/static/console/docs/DNSSEC-Multi_Signer-Guide.pdf).\n\nUltraDNS DNSSEC uses _online_ (also known as _on-the-fly_) signing in generating signed responses to queries. UltraDNS supports DNSSEC algorithm 13 only for this process. Implementers of multi-signer can add DNSKEY details for external signers using other algorithms as needed, but all UltraDNS generated key information uses algorithm 13 (ECDSA).\n\nAdditionally, UltraDNS signers generate a unique KSK and ZSK for every zone. This approach gives flexibility for zone owners to roll their KSK without impacting other zones that share the KSK information and allows the ZSK to be automatically rolled at regular intervals. The implementation of multi-signer follows the methods described in [RFC 8901 model 2](https://www.rfc-editor.org/rfc/rfc8901.html#name-model-2-unique-ksk-set-and-) where each signer maintains its own unique KSK and ZSK.\n\nSupport of DNSSEC Multi-Signer is derived from, and supports portions of the following RFCs:\n\n- [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html) - Multi-Signer DNSSEC Models.\n    \n- [RFC 7344](https://www.rfc-editor.org/rfc/rfc7344) - Automating DNSSEC Delegation Trust Maintenance.\n    \n- [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078) - Managing DS Records from the Parent via CDS/CDNSKEY.\n    \n- [RFC 6781](https://www.rfc-editor.org/rfc/rfc6781.html) - DNSSEC Operational Practices, Version 2."
 		}
 	],
 	"auth": {
