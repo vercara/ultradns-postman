@@ -38,6 +38,8 @@ The collection is organized into folders, each representing a base resource (ex:
 
 - **Subaccounts**: APIs exclusive to accounts that contain child accounts. If you don't have access to this feature, they'll produce an error.
 
+- **Records**: APIs for adding/updating/deleting RRsets for a zone.  These APIs use RRset DTO definitions and pre-request/post-request scripts for managing environment variables and POST body content.
+
 ## Bypassing Automated Authentication
 
 To manually provide your Bearer token, go to the "Authorization" tab of the collection and modify the value. This would be necessary, as an example, to use a token produced by the subaccount authorization endpoint. Remember to revert it to the `{{accessToken}}` variable after you're done.

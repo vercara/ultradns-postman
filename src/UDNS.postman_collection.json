@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "96acc28c-c730-4484-9a15-43f2bb753d3a",
+		"_postman_id": "cefef2fe-5b8a-44fd-a2d5-b975452dbeea",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -545,6 +545,286 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Records",
+			"item": [
+				{
+					"name": "List RRset",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var query_params = {\r",
+									"    // Query will look something like this: q=ttl:300+kind:RECORDS.  Potential values:\r",
+									"    //  * ttl:String (number >= 0. Only valid for kind=RECORDS)\r",
+									"    //  * owner:String (partial match of owner name)\r",
+									"    //  * value:String (partial match of rdata, RECORDS kind only)\r",
+									"    //  * kind:ALL|RECORDS|POOLS|RD_POOLS|DIR_POOLS|SB_POOLS|TC_POOLS\r",
+									"    // This value for q will query for all regular records with TTL of 300 and owner name containing \"www\":\r",
+									"    //'q':                        'ttl:300+kind:RECORDS+owner:www',\r",
+									"    //'offset':                   '0',\r",
+									"    //'limit':                    '100',\r",
+									"    //'sort':                     'OWNER',\r",
+									"    //'reverse':                  'false',\r",
+									"    //'systemGeneratedStatus':    'true',\r",
+									"}\r",
+									"\r",
+									"for (let key in query_params) {\r",
+									"    console.log(key, query_params[key])\r",
+									"    pm.request.url.query.add({key: key, value: query_params[key]})\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{records_zoneName}}/rrsets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{records_zoneName}}",
+								"rrsets"
+							]
+						},
+						"description": "This call provides a list of all RRSets in a zone, or if specific query parameters are used, a list of the RRSets in a zone that match the provided criteria. The {zoneName} identified in the call should be the name of the domain whose RRsets you want to return."
+					},
+					"response": []
+				},
+				{
+					"name": "Create RRset",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Variables to control record creation.  This is much easier than switching back and forth\r",
+									"// to the environment in order to update these parameters: \r",
+									"//\r",
+									"// * TODO: Specify values for ownerName, recordType, recordTtl, and recordRdata\r",
+									"\r",
+									"const ownerName     = '<OWNER_NAME>';\r",
+									"const recordType    = 'A';\r",
+									"const recordTtl     = '300';\r",
+									"\r",
+									"// Examples of recordRdata:\r",
+									"// * A:         1.1.1.1\r",
+									"// * CNAME:     www.example.com\r",
+									"// * MX:        10 mail.example.com\r",
+									"// * MX (NULL): 0 .\r",
+									"\r",
+									"const recordRdata   = '1.1.1.1';\r",
+									"\r",
+									"const bodyContent = {\r",
+									"    'ttl': recordTtl,\r",
+									"    'rdata': [\r",
+									"        recordRdata\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Convert the JavaScript object to a JSON string\r",
+									"const bodyContentString = JSON.stringify(bodyContent);\r",
+									"\r",
+									"// Set the environment variable with the JSON string\r",
+									"pm.environment.set(\"requestBody\", bodyContentString);\r",
+									"\r",
+									"// Update environment variables to reflect record being configured\r",
+									"pm.environment.set('records_ownerName', ownerName);\r",
+									"pm.environment.set('records_type', recordType);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{requestBody}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{records_zoneName}}/rrsets/{{records_type}}/{{records_ownerName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{records_zoneName}}",
+								"rrsets",
+								"{{records_type}}",
+								"{{records_ownerName}}"
+							]
+						},
+						"description": "The Create RRSet for an Owner call requires you to send an RRSet DTO with the call. However, the  \nownerName and rrtype fields are not required because they are specified in the URI. If the DTO you  \nsend does include them, they will be ignored."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RRset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == '204') {\r",
+									"    console.log(\"Delete happened immediately!\");\r",
+									"} else if (pm.response.code == '202') {\r",
+									"    console.log(\"Delete happened in background!\");\r",
+									"    console.log(\"X-Task-ID: \" + pm.response.headers.get('X-Task-ID'));\r",
+									"} else {\r",
+									"    console.log(\"Delete Response (status code == \" + pm.response.code + \")!\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set('records_type', 'A');\r",
+									"pm.environment.set('records_ownerName', '<OWNER_NAME>');"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{records_zoneName}}/rrsets/{{records_type}}/{{records_ownerName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{records_zoneName}}",
+								"rrsets",
+								"{{records_type}}",
+								"{{records_ownerName}}"
+							]
+						},
+						"description": "This call allows you to delete all resource records of a particular type (an RRSet) for a specified  \ndomain owner."
+					},
+					"response": []
+				},
+				{
+					"name": "Update RRset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == '200') {\r",
+									"    console.log(\"Update happened immediately!\");\r",
+									"} else if (pm.response.code == '202') {\r",
+									"    console.log(\"Update happened in background!\");\r",
+									"    console.log(\"X-Task-ID: \" + pm.response.headers.get('X-Task-ID'));\r",
+									"} else {\r",
+									"    console.log(\"Update Response (status code == \" + pm.response.code + \")!\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// NOTE: You must provide ALL record information.  \r",
+									"// Any resource records not included will be removed from the RRSet.\r",
+									"// It is recommended that you call \"List RRset\" first to get an RRset DTO that you\r",
+									"// can modify and then send to this \"Update RRset\" API.\r",
+									"//  \r",
+									"// Variables to control record update.  This is much easier than switching back and forth\r",
+									"// to the environment in order to update these parameters: \r",
+									"//\r",
+									"// * TODO: Specify values for ownerName, recordType, recordTtl, and recordRdata\r",
+									"\r",
+									"const ownerName     = '<OWNER_NAME>';\r",
+									"const recordType    = 'A';\r",
+									"const recordTtl     = '300';\r",
+									"\r",
+									"// Examples of recordRdata:\r",
+									"// * A:         1.1.1.1\r",
+									"// * CNAME:     www.example.com\r",
+									"// * MX:        10 mail.example.com\r",
+									"// * MX (NULL): 0 .\r",
+									"\r",
+									"const recordRdata   = '1.1.1.1';\r",
+									"\r",
+									"const bodyContent = {\r",
+									"    'ttl': recordTtl,\r",
+									"    'rdata': [\r",
+									"        recordRdata\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"// Convert the JavaScript object to a JSON string\r",
+									"const bodyContentString = JSON.stringify(bodyContent);\r",
+									"\r",
+									"// Set the environment variable with the JSON string\r",
+									"pm.environment.set(\"requestBody\", bodyContentString);\r",
+									"\r",
+									"// Update environment variables to reflect record being configured\r",
+									"pm.environment.set('records_ownerName', ownerName);\r",
+									"pm.environment.set('records_type', recordType);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{requestBody}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/zones/{{records_zoneName}}/rrsets/{{records_type}}/{{records_ownerName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zones",
+								"{{records_zoneName}}",
+								"rrsets",
+								"{{records_type}}",
+								"{{records_ownerName}}"
+							]
+						},
+						"description": "This call allows you to update a set of resource records of a particular type (an RRSet) for a  \nspecified domain owner. Be sure to specify the TTL and ALL the record information. Any resource records not included will be removed from the RRSet, and the TTL value specified at the account level for the record type (or global TTL value) will be used."
+					},
+					"response": []
+				}
+			],
+			"description": "In this folder are operations pertaining to the records of a zone.\n\nThe basic unit for resource record manipulation in the REST API is the RRSet. An RRSet contains  \nthe data for all resource records present at the same owner name (label), and with the same type  \nand class (all records in UltraDNS have IN class). Rather than trying to specify a custom structure for each different resource record type, the data for all resource records is represented by an _rdata_ field. This field's contents map to the data supplied in the BIND presentation format for a resource record.\n\nIn order to simplify configuration of environment variables, the API calls in this folder contain pre-request scripts that can be used to modify variables/parameters used in the API call. Please use these scripts to setup variables and the environment before making calls."
 		},
 		{
 			"name": "Tasks",
