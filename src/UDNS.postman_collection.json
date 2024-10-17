@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cefef2fe-5b8a-44fd-a2d5-b975452dbeea",
+		"_postman_id": "2cb7a97f-1935-474b-8cd4-1c91da4c2305",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -518,6 +518,28 @@
 								"rrsets",
 								"{{sb_rrType}}",
 								"{{sb_ownerName}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Zone Transfer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.ultradns.com/zones/{{zones_zoneName}}/transfer",
+							"protocol": "https",
+							"host": [
+								"api",
+								"ultradns",
+								"com"
+							],
+							"path": [
+								"zones",
+								"{{zones_zoneName}}",
+								"transfer"
 							]
 						}
 					},
