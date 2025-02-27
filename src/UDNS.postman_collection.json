@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2cb7a97f-1935-474b-8cd4-1c91da4c2305",
+		"_postman_id": "1720c460-d593-4e35-9ad3-2a45b239d6b1",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -476,48 +476,6 @@
 								"zones",
 								"{{zones_zoneName}}",
 								"restore"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create SiteBacker Pool",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "// NOTE: Update the body below as follows: \r\n// - Add an entry to rdata array for each IP that will be part of the pool\r\n// - For each IP entered, add an object to the rdataInfo array that includes:\r\n// -- state: NORMAL, Force Active, Force Fail\r\n// -- runProbes: true, false\r\n// -- priority: Positive Integer\r\n// -- failoverDelay: 0, or Positive Integer\r\n// -- threshold: Positive Integer\r\n// -- availableToServe: true, false\r\n// - Add an entry to the backupRecords array that includes:\r\n// -- rdata: String (IP address)\r\n// -- failoverDelay: 0 or Positive Integer\r\n{\r\n    \"ttl\": 300,\r\n    \"rdata\": [\r\n        \"1.1.1.1\",\r\n        \"2.2.2.2\",\r\n        \"3.3.3.3\",\r\n        \"4.4.4.4\"\r\n    ],\r\n    \"profile\": {\r\n        \"@context\": \"http://schemas.ultradns.com/SBPool.jsonschema\",\r\n        \"description\": \"Test SiteBacker Pool\",\r\n        \"runProbes\": true,\r\n        \"actOnProbes\": true,\r\n        \"order\": \"FIXED\",\r\n        \"maxActive\": 1,\r\n        \"failureThreshold\": 0,\r\n        \"maxServed\": 1,\r\n        \"rdataInfo\": [{\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }],\r\n        \"backupRecords\": [{\r\n            \"rdata\": \"9.9.9.9\",\r\n            \"failoverDelay\":0\r\n        }]\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/rrsets/{{sb_rrType}}/{{sb_ownerName}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"zones",
-								"{{zones_zoneName}}",
-								"rrsets",
-								"{{sb_rrType}}",
-								"{{sb_ownerName}}"
 							]
 						}
 					},
@@ -1573,6 +1531,94 @@
 				}
 			],
 			"description": "UltraDNS API endpoints that support [multi-signer DNSSEC](https://ultra-portalstatic.ultradns.com/static/console/docs/DNSSEC-Multi_Signer-Guide.pdf).\n\nUltraDNS DNSSEC uses _online_ (also known as _on-the-fly_) signing in generating signed responses to queries. UltraDNS supports DNSSEC algorithm 13 only for this process. Implementers of multi-signer can add DNSKEY details for external signers using other algorithms as needed, but all UltraDNS generated key information uses algorithm 13 (ECDSA).\n\nAdditionally, UltraDNS signers generate a unique KSK and ZSK for every zone. This approach gives flexibility for zone owners to roll their KSK without impacting other zones that share the KSK information and allows the ZSK to be automatically rolled at regular intervals. The implementation of multi-signer follows the methods described in [RFC 8901 model 2](https://www.rfc-editor.org/rfc/rfc8901.html#name-model-2-unique-ksk-set-and-) where each signer maintains its own unique KSK and ZSK.\n\nSupport of DNSSEC Multi-Signer is derived from, and supports portions of the following RFCs:\n\n- [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html) - Multi-Signer DNSSEC Models.\n    \n- [RFC 7344](https://www.rfc-editor.org/rfc/rfc7344) - Automating DNSSEC Delegation Trust Maintenance.\n    \n- [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078) - Managing DS Records from the Parent via CDS/CDNSKEY.\n    \n- [RFC 6781](https://www.rfc-editor.org/rfc/rfc6781.html) - DNSSEC Operational Practices, Version 2."
+		},
+		{
+			"name": "Traffic Management",
+			"item": [
+				{
+					"name": "SiteBacker",
+					"item": [
+						{
+							"name": "Record Priority Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json-patch+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// This PATCH command is intended for a SiteBacker pool consisting of two records and the use case is\r\n// to allow for switching the priority of the two records.  The PATCH command 'path' value is used to\r\n// determine which record the update is applied.  A path with '0' in it is referring to the first\r\n// record listed in the UI and will be the record with the lowest priority.  A path with '1' in it is\r\n// referring to the second record listed in the UI and will be the record with next lowest priority.\r\n//\r\n// For a simple use case where you're switching the priority of two records you can run the request\r\n// without adjusting any values.  But, in a use case where you have multiple records, you'll need to \r\n// account for the change in relative record order from previous priority record adjustments.\r\n//\r\n// NOTE: This assumes the first record has a priority value of 1 and the other record has priority\r\n// value of 101.\r\n[\r\n    // JSON DTO (pool record with lowest value for priority field.\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/profile/rdataInfo/0/priority\",\r\n        \"value\": \"101\"\r\n    },\r\n    // JSON DTO (pool record with the next highest value for priority field.\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/profile/rdataInfo/1/priority\",\r\n        \"value\": \"1\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/rrsets/{{sb_rrType}}/{{sb_ownerName}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"zones",
+										"{{zones_zoneName}}",
+										"rrsets",
+										"{{sb_rrType}}",
+										"{{sb_ownerName}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create SiteBacker Pool",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// NOTE: Update the body below as follows: \r\n// - Add an entry to rdata array for each IP that will be part of the pool\r\n// - For each IP entered, add an object to the rdataInfo array that includes:\r\n// -- state: NORMAL, Force Active, Force Fail\r\n// -- runProbes: true, false\r\n// -- priority: Positive Integer\r\n// -- failoverDelay: 0, or Positive Integer\r\n// -- threshold: Positive Integer\r\n// -- availableToServe: true, false\r\n// - Add an entry to the backupRecords array that includes:\r\n// -- rdata: String (IP address)\r\n// -- failoverDelay: 0 or Positive Integer\r\n{\r\n    \"ttl\": 300,\r\n    \"rdata\": [\r\n        \"1.1.1.1\",\r\n        \"2.2.2.2\",\r\n        \"3.3.3.3\",\r\n        \"4.4.4.4\"\r\n    ],\r\n    \"profile\": {\r\n        \"@context\": \"http://schemas.ultradns.com/SBPool.jsonschema\",\r\n        \"description\": \"Test SiteBacker Pool\",\r\n        \"runProbes\": true,\r\n        \"actOnProbes\": true,\r\n        \"order\": \"FIXED\",\r\n        \"maxActive\": 1,\r\n        \"failureThreshold\": 0,\r\n        \"maxServed\": 1,\r\n        \"rdataInfo\": [{\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }, {\r\n            \"state\": \"NORMAL\",\r\n            \"runProbes\": true,\r\n            \"priority\": 1,\r\n            \"failoverDelay\": 0,\r\n            \"threshold\": 1,\r\n            \"availableToServe\": true\r\n        }],\r\n        \"backupRecords\": [{\r\n            \"rdata\": \"9.9.9.9\",\r\n            \"failoverDelay\":0\r\n        }]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/zones/{{zones_zoneName}}/rrsets/{{sb_rrType}}/{{sb_ownerName}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"zones",
+										"{{zones_zoneName}}",
+										"rrsets",
+										"{{sb_rrType}}",
+										"{{sb_ownerName}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {
