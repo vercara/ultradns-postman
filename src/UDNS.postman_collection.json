@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1720c460-d593-4e35-9ad3-2a45b239d6b1",
+		"_postman_id": "30a5157f-105d-4b73-ad5f-131a32cf5e47",
 		"name": "UDNS",
 		"description": "This collection contains requests for the UDNS API. The folders mostly represent the different base resources, i.e. \"zones\" which contains all the various zone operations and \"reports\" which has the reporting operations.\n\nAt the collection level, there is a pre-request script which handles your authentication and has some basic utility functions. The script will generate a bearer token and, when it expires, refresh it.\n\nThe utilities are an object defined globalls in the scope of the pre-request script, which makes it available to the individual requests. Simply call:\n\n``` javascript\nutils.functionName()\n\n ```\n\nThe username and password variables must be set in your environment for the collection pre-request to run.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -995,6 +995,36 @@
 									"key": "limit",
 									"value": "100000"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zero Query Report",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"zeroZoneQueryVolume\": {\r\n        \"accountName\": \"{{subaccounts_accountName}}\",\r\n        \"reportStartDate\": \"{{reports_startDate}}\",\r\n        \"reportEndDate\": \"{{reports_endDate}}\",\r\n        \"wrap\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/reports/dns_resolution/query_volume/zone/no_queries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"reports",
+								"dns_resolution",
+								"query_volume",
+								"zone",
+								"no_queries"
 							]
 						}
 					},
