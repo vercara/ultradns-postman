@@ -1,4 +1,4 @@
-> ** ⚠️ DEPRECATION NOTICE**
+>  ⚠️ **DEPRECATION NOTICE**
 > 
 > This repository is no longer maintained and has been archived.  
 > The UltraDNS Postman collection and all future updates have moved to  
