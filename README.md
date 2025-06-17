@@ -1,3 +1,12 @@
+> ** ⚠️ DEPRECATION NOTICE**
+> 
+> This repository is no longer maintained and has been archived.  
+> The UltraDNS Postman collection and all future updates have moved to  
+> https://github.com/ultradns/postman  
+> 
+> Please update your bookmarks and direct any new issues or pull requests  
+> to the `ultradns/postman` repository.
+
 # ultradns-postman
 
 This repository contains a set of sample requests for the UDNS API, built from hands-on experience. The aim is to provide a foundational framework that takes care of authentication and automates tasks and report retrievals using pre/post-request scripts.
